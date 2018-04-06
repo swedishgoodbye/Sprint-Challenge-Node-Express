@@ -110,66 +110,64 @@ server.delete('/api/project/:projId', (req, res) => {
     })
 })
 
-server.get('/api/project/:projId/actions', (req, res) => {
-    const {projId} = req.params;
+// server.get('/api/project/:projId/actions', (req, res) => {
+//     const {projId} = req.params;
 
-    pDb
-    .getProjectActions(projId)
-    .then(acts => {
-        res.status(200).json(acts)
-    })
-    .catch(error => {
-        res.error(500).json({error: 'That project has no actions.'})
-    })
-})
+//     pDb
+//     .getProjectActions(projId)
+//     .then(acts => {
+//         res.status(200).json(acts)
+//     })
+//     .catch(error => {
+//         res.error(500).json({error: 'That project has no actions.'})
+//     })
+// })
 
-server.post('/api/project/:projId/actions', (req, res) => {
-    const {description} = req.body;
-    const {projId} = req.params;
+// server.post('/api/project/:projId/actions', (req, res) => {
+//     const {description} = req.body;
+//     const {projId} = req.params;
     
-    pDb
-    .getProjectActions(projId)
-    aDb
-    .insert(projId, description)
-    .then(desc => {
-        res.status(200).json(desc)
-    })
-    .catch(error => {
-        res.status(500).json({error: 'Could not post an action.'})
-    })
+//     aDb
+//     .insert(projId, description)
+//     .then(desc => {
+//         res.status(200).json(desc)
+//     })
+//     .catch(error => {
+//         res.status(500).json({error: 'Could not post an action.'})
+//     })
 
-})
+// })
 
-server.put('/api/project/:projId/actions/:actionId', (req, res) => {
-    const {description} = req.body;
-    const {projId} = req.params;
-    const {actId} = req.params;
+// server.put('/api/project/:projId/actions/:actionId', (req, res) => {
+//     const {description} = req.body;
+//     const {projId} = req.params;
+//     const {actId} = req.params;
 
-    aDb
-    .update(actId, description)
-    .then(updated => {
-        res.status(200).json({message: `Action ${actId} has been updated.`})
-    })
-    .catch(error =>{
-        res.status(500).json({error: `Action ${actId} could not be updated.`})
-    })
-})
+//     aDb
+//     .update(actId, description)
+//     .then(updated => {
+//         res.status(200).json({message: `Action ${actId} has been updated.`})
+//     })
+//     .catch(error =>{
+//         res.status(500).json({error: `Action ${actId} could not be updated.`})
+//     })
+// })
 
-server.delete('/api/project/:projId/actions/:actionId', (req, res) => {
-    const {projId} = req.params;
-    const {actId} = req.params;
+// server.delete('/api/project/:projId/actions/:actionId', (req, res) => {
+//     const {projId} = req.params;
+//     const {actId} = req.params;
 
-    aDb
-    .remove(actId)
-    .then(del => {
-        res.status(200).json({message: `Action ${actId} was deleted.`})
-    })
-    .catch(error => {
-        res.status(500).json({error: 'Action not deleted.'})
-    })
-})
+//     aDb
+//     .remove(actId)
+//     .then(del => {
+//         res.status(200).json({message: `Action ${actId} was deleted.`})
+//     })
+//     .catch(error => {
+//         res.status(500).json({error: 'Action not deleted.'})
+//     })
+// })
 
-server.get('/api/project/actions', (req, res) => {
+server.get('/api/actions', (req, res) => {
     aDb
     .get()
     .then(act => {
@@ -179,6 +177,82 @@ server.get('/api/project/actions', (req, res) => {
         res.status(500).json({error: 'Your search produced no acters.'})
     })
 })
+
+server.post('/api/actions', (req, res) => {
+    // const {description, notes, completed} = req.body;
+    // const {projId} = req.params;
+
+    // const newAct = {description, notes, completed}
+
+    const newAct = req.body
+
+    
+    aDb
+    .insert( newAct)
+    .then(desc => {
+        res.status(200).json(desc)
+    })
+    .catch(error => {
+        res.status(500).json({error: 'Could not post an action.'})
+    })
+
+})
+
+server.get('/api/actions/:actId', (req, res) => {
+    const {actId} = req.params
+    aDb
+    .get(actId)
+    .then(aId => {
+        res.status(200).json(aId)
+    })
+    .catch(error => {
+        res.status(500).json(error)
+    })
+})
+
+server.delete('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+
+    aDb
+    .remove(id)
+    .then(del => {
+        res.status(200).json({message: `Action ${id} was deleted.`})
+    })
+    .catch(error => {
+        res.status(500).json({error: 'Action not deleted.'})
+    })
+})
+
+server.put('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const newAct = req.body;
+
+    aDb
+    .update(id, newAct)
+    .then(upD => {
+        res.status(200).json({message: `Action ${id} was updated.`})
+    })
+    .catch(error => {
+        res.status(500).json({error: 'Action not updated'})
+    })
+})
+
+
+
+// server.get('/api/actions/projact/:projId', (req, res) => {
+//     const {projId} = req.params;
+
+//     pDb
+//     .getProjectActions(projId)
+//     .then(acts => {
+//         res.status(200).json(acts)
+//     })
+//     .catch(error => {
+//         res.error(500).json({error: 'That project has no actions.'})
+//     })
+// })
+
+
 
 
 
