@@ -49,11 +49,24 @@ router.get('/:projId', (req, res) => {
     .get(projId)
     .then(proj => {
         res.status(200).json(proj)
-    })
+    })  
     .catch(error => {
         res.status(500).json({error: 'That project does not exist dude.'})
     })
 }
+})
+
+router.get('/:id/actions', (req, res) => {
+    const {id} = req.params;
+
+    pDb
+    .getProjectActions(id)
+    .then(acts => {
+        res.status(200).json(acts)
+    })
+    .catch(error => {
+        res.error(500).json({error: 'That project has no actions.'})
+    })
 })
 
 router.put('/:projId', (req, res) => {

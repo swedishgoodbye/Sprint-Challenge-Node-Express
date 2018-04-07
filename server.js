@@ -113,18 +113,18 @@ server.get('/api', function(req, res){
 //     })
 // })
 
-// // server.get('/api/project/:projId/actions', (req, res) => {
-// //     const {projId} = req.params;
+// server.get('/api/project/:projId/actions', (req, res) => {
+//     const {projId} = req.params;
 
-// //     pDb
-// //     .getProjectActions(projId)
-// //     .then(acts => {
-// //         res.status(200).json(acts)
-// //     })
-// //     .catch(error => {
-// //         res.error(500).json({error: 'That project has no actions.'})
-// //     })
-// // })
+//     pDb
+//     .getProjectActions(projId)
+//     .then(acts => {
+//         res.status(200).json(acts)
+//     })
+//     .catch(error => {
+//         res.error(500).json({error: 'That project has no actions.'})
+//     })
+// })
 
 // // server.post('/api/project/:projId/actions', (req, res) => {
 // //     const {description} = req.body;
